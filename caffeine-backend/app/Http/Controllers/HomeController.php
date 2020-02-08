@@ -105,7 +105,7 @@ class HomeController extends Controller
                 $response = JsonReturn::cannotDrinkMaySuggest($caffeineLeft['caffeine_left_mg'], $suggestions);
                 break;
             case $user::CAFFEINE_DANGER_EXCEED_LIMIT_PER_DAY_MG:
-                $response = JsonReturn::exceededCaffeineLimit($caffeineLeft['caffeine_left_mg'], $user->favoriteDrink);
+                $response = JsonReturn::exceededCaffeineLimit($caffeineLeft['caffeine_left_mg']);
                 break;
         }
 
