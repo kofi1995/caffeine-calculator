@@ -34,7 +34,7 @@ To run tests, navigate to the `caffeine-backend` in the terminal and run:
 
 Navigate to the `caffeine-app` directory and run `npm install` in your terminal.
 
-Navigate to `src/app/services/data.service.ts` and `src/app/services/authentication.service.ts` and modify the `baseUri` variable to point to the URI of the `caffeine-backend` application.
+Navigate to `src/app/environments/env.ts` and modify the `apiUrl` variable to point to the URI of the `caffeine-backend` application.
 
 Run `ng serve` to start the development server.
 
