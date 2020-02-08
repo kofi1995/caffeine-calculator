@@ -115,7 +115,7 @@ class ApiEndpointsTest extends TestCase
 
     public function testCalculateCaffeineSuccess() {
         Passport::actingAs(
-            $this->user->fresh(),
+            $this->user,
             ['*']
         );
         $response = $this->json('POST', '/api/calculate-caffeine-intake', [
@@ -129,7 +129,7 @@ class ApiEndpointsTest extends TestCase
 
     public function testCalculateCaffeineServingValidationFail() {
         Passport::actingAs(
-            $this->user->fresh(),
+            $this->user,
             ['*']
         );
         $response = $this->json('POST', '/api/calculate-caffeine-intake', [
