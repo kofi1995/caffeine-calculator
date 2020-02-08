@@ -32,7 +32,7 @@ class ApiEndpointsTest extends TestCase
         //$this->artisan('passport:client --password --name=test_client -n');
         $this->user = User::first();
         $this->drinks = Drink::getDrinks();
-        $this->drink = $this->drinks->first();
+        $this->drink = $this->drinks->random();
         $this->user->drink_id = $this->drink['id'];
         $this->user->save();
     }
@@ -72,9 +72,9 @@ class ApiEndpointsTest extends TestCase
         $response->assertStatus(200)->assertJson([
             'success' => true,
             'data' => [
-                'drinks' => [
-                    $this->drink
-                ],
+                'drinks' =>
+                    [$this->drinks->first()]
+                ,
             ],
         ]);
     }
