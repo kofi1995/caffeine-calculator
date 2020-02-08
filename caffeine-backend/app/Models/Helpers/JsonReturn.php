@@ -48,7 +48,9 @@ class JsonReturn
         ]);
     }
     public static function exceededCaffeineLimit(int $limit) {
-        return (new self)->error('This is unhealthy. You have already exceeded your caffeine limit by: ' . abs($limit) . ' mg', 403);
+        return (new self)->error('This is unhealthy. You have already exceeded your caffeine limit by: ' . abs($limit) . ' mg', 403, [
+            'caffeine_left_mg' => $limit,
+        ]);
     }
     public static function cannotDrinkMaySuggest(int $caffeine_left, $suggestions = null) {
         $suggestionMessage = $suggestions ? ' Here are a list of other drinks you can try and their serving size:' : '';
@@ -57,7 +59,7 @@ class JsonReturn
             409,
             [
                 'suggestions' => $suggestions,
-                'caffeine_left-mg' => $caffeine_left,
+                'caffeine_left_mg' => $caffeine_left,
             ]
         );
     }

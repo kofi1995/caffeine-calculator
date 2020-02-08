@@ -139,7 +139,7 @@ class ApiEndpointsTest extends TestCase
         $response->assertStatus(422);
     }
 
-    public function testCalculateCaffeineServingCalculations() {
+    public function testCalculateCaffeineServingApiCalculation() {
 
             $test_data = $this->calculationsTestData();
             $this->user->drink_id = $test_data['drink_id'];
@@ -152,7 +152,15 @@ class ApiEndpointsTest extends TestCase
             $internalCode = $this->user->canDrinkFavoriteDrink($test_data['data']['quantity'], $test_data['data']['serving']);
             $response = $this->json('POST', '/api/calculate-caffeine-intake', $test_data['data']);
 
-            $response->assertStatus($this->jsonCode($internalCode['code']));
+            $response->assertStatus($this->jsonCode($internalCode['code']))->assertJson([
+                'data' => [
+                    'caffeine_left_mg' => $internalCode['caffeine_left_mg'],
+                ]
+            ]);
+    }
+
+    public function testCalculateCaffeineServingApiCalculation2() {
+        $this->testCalculateCaffeineServingApiCalculation();
     }
 
     private function calculationsTestData() {
