@@ -4,11 +4,15 @@
 
 ## Backend/API
 
-Navigate to the `caffeine-backend` directory and run `composer install` in your terminal.
-
 The application uses `mysql` as it's primary database and `sqlite` for testing.
 
-Copy `.env.example` to `.env` and run `php artisan key:generate`.
+Navigate to the `caffeine-backend` directory.
+
+Copy `.env.example` to `.env` and change the variables to match your environment.
+
+Run `composer install` in your terminal.
+
+Run `php artisan key:generate`.
 
 After setting up your development environment, run:
 `php artisan migrate --seed` in your terminal to run both the database migrations and the seed
