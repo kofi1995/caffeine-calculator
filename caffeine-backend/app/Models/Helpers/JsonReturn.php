@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models\Helpers;
 
 
@@ -41,14 +40,15 @@ class JsonReturn
     public static function favoriteDrinkNotSelected() {
         return (new self)->error('Favorite drink not selected', 403);
     }
-    public static function canDrinkFavorite(int $caffeine_left, int $servings_allowed) {
+    public static function canDrinkFavorite(int $caffeine_left, int $servings_allowed, int $serving_left) {
         return (new self)->success('You can drink your favorite drink', [
             'servings_allowed' => $servings_allowed,
+            'servings_left' => $serving_left,
             'caffeine_left_mg' => $caffeine_left,
         ]);
     }
     public static function exceededCaffeineLimit(int $limit) {
-        return (new self)->error('This is unhealthy. You have exceeded your caffeine limit by: ' . abs($limit) . ' mg', 403);
+        return (new self)->error('This is unhealthy. You have already exceeded your caffeine limit by: ' . abs($limit) . ' mg', 403);
     }
     public static function cannotDrinkMaySuggest(int $caffeine_left, $suggestions = null) {
         $suggestionMessage = $suggestions ? ' Here are a list of other drinks you can try and their serving size:' : '';

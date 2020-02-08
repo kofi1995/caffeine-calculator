@@ -1,0 +1,36 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Are you sure?</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        Are you sure you want to select {{selectedDrink}} as your favorite Drink
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.dismiss()">Cancel</button>
+      <button type="button" class="btn btn-outline-dark" (click)="selectFavoriteDrink(selectedDrinkID)">Select</button>
+    </div>
+  </ng-template>
+  
+<div class="card">
+    <div class="card-header">Choose your favorite drink</div>
+
+    <div class="card-body">
+        <div class="row" *ngIf="drinks">
+            <ng-container *ngFor="let drink of drinks">
+                <div class="col-md-4">
+                    <div class="card card-drink">
+                        <div class="card-header">{{drink.drink}}</div>
+                        <div class="card-body">{{drink.description}}</div>
+                        <div class="card-footer">
+                            <button class="btn btn-lg btn-outline-primary" *ngIf="!currentUser.user.favorite_drink || (currentUser.user.favorite_drink && (currentUser.user.favorite_drink.id != drink.id))" (click)="favDrinkPopup(content, drink.drink, drink.id)">Choose</button>
+                            <button class="btn btn-lg btn-outline-primary disabled" *ngIf="currentUser.user.favorite_drink && (currentUser.user.favorite_drink.id == drink.id)">Selected</button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

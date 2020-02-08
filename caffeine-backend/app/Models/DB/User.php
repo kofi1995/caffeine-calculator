@@ -76,7 +76,11 @@ class User extends Authenticatable
                                                         $caffeineLeft,
                                                         $favoriteDrink->caffeine_mg_per_serving,
                                                         $favoriteDrink->serving
-                                                    )
+                                                    ),
+               'serving_left' => $this->calculateServingsLeft(
+                   $caffeineLeft,
+                   $favoriteDrink->caffeine_mg_per_serving
+               )
            ];
        }
        else {
@@ -115,6 +119,10 @@ class User extends Authenticatable
                     return $i;
                 }
             }
+    }
+
+    private function calculateServingsLeft(int $caffeine_left, int $caffeine_per_serving): int {
+        return $caffeine_left > 0 ? (int) ($caffeine_left / $caffeine_per_serving): 0;
     }
 
 }

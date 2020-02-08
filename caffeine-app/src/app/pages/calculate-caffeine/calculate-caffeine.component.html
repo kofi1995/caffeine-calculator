@@ -1,0 +1,66 @@
+<div class="col-md-10 offset-md-1 mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h4>Caffeine Intake Calculator</h4>
+            <h5>Favorite Drink: {{currentUser.user.favorite_drink.name}}</h5>
+            <h5>Serving Size:  {{currentUser.user.favorite_drink.serving}}</h5>
+            <h5>Caffeine per serving (mg): {{currentUser.user.favorite_drink.caffeine_mg_per_serving}}</h5>
+            <h5>Caffeine Allowed (mg): 500</h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="calculateCaffeineForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="quantity">Quantity Taken</label>
+                    <input type="number" formControlName="quantity" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }" />
+                    <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
+                        <div *ngIf="f.quantity.errors.required">Quantity is required</div>
+                        <div *ngIf="f.quantity.errors.min">Quantity must be at least 1</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="serving">Serving Size</label>
+                    <input type="number" formControlName="serving" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.serving.errors }" />
+                    <div *ngIf="submitted && f.serving.errors" class="invalid-feedback">
+                        <div *ngIf="f.serving.errors.required">Serving size is required</div>
+                        <div *ngIf="f.serving.errors.min">Serving should be at least 1</div>
+                        <div *ngIf="f.serving.errors.max">Serving cannot be greater than {{currentUser.user.favorite_drink.serving}}</div>
+                    </div>
+                </div>
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Calculate
+                </button>
+                <div *ngIf="success" class="alert alert-success mt-3 mb-0">
+                    <p>{{success.message}}</p>
+                    <p>Serving Size: {{success.data.servings_allowed}}</p>
+                    <p>Caffeine Left after drink: {{success.data.caffeine_left_mg}}mg</p>
+                    <p>Servings until Limit: {{success.data.servings_left}}</p>
+                </div>
+                <div *ngIf="warn" class="alert alert-warning mt-3 mb-0">
+                    {{warn}}
+                </div>
+                <div *ngIf="info" class="alert alert-info mt-3 mb-0">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Drink</th>
+                            <th>Servings Allowed</th>
+                            <th>Caffeine (mg)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let drink of info">
+                            <td>{{drink.drink}}</td>
+                            <td>{{drink.servings_allowed}}</td>
+                            <td>{{drink.caffeine_in_mg}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+                    {{error}}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
