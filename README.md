@@ -1,4 +1,4 @@
-# Votes
+# Caffeine Calculator
 
 ## Installation
 
