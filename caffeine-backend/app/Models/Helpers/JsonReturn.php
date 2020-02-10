@@ -38,7 +38,7 @@ class JsonReturn
 
 
     public static function favoriteDrinkNotSelected() {
-        return (new self)->error('Favorite drink not selected', 403);
+        return (new self)->error('Favorite drink not selected', 409);
     }
     public static function canDrinkFavorite(int $caffeine_left, int $servings_allowed, int $serving_left) {
         return (new self)->success('You can drink your favorite drink', [
@@ -56,7 +56,7 @@ class JsonReturn
         $suggestionMessage = $suggestions ? ' Here are a list of other drinks you can try and their serving size:' : '';
         return (new self)->error(
             'You cannot take your favorite drink. You have ' . $caffeine_left . 'mg of caffeine left.' . $suggestionMessage,
-            409,
+            403,
             [
                 'suggestions' => $suggestions,
                 'caffeine_left_mg' => $caffeine_left,

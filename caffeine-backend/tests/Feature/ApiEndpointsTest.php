@@ -91,7 +91,7 @@ class ApiEndpointsTest extends TestCase
             'quantity' => 1,
             'serving' => 1,
         ]);
-        $response->assertStatus(403)->assertJson([
+        $response->assertStatus(409)->assertJson([
             'success' => false,
         ]);
     }
@@ -184,8 +184,6 @@ class ApiEndpointsTest extends TestCase
                 $response = 200;
                 break;
             case $user::CAFFEINE_EXCEED_LIMIT_PER_DAY_MG:
-                $response = 409;
-                break;
             case $user::CAFFEINE_DANGER_EXCEED_LIMIT_PER_DAY_MG:
                 $response = 403;
                 break;

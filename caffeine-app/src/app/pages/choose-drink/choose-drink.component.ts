@@ -47,21 +47,23 @@ export class ChooseDrinkComponent implements OnInit {
             this.drinks = this.dataService.favoriteDrinks;
           },
           error => {
+            alert("Something went wrong, please try again.")
           });
     }
   }
 
   selectDrink(drink_id:number) {
       this.dataService.chooseFavoriteDrink(drink_id)
-      .pipe(first())
       .subscribe(
           data => {
             this.currentUser.user.favorite_drink = data;
             localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
             this.router.navigate([this.returnUrl]);
+            this.openedModal.dismiss()
             setTimeout(function(){ location.reload(true); }, 100);
           },
           error => {
+            alert("Something went wrong, please try again.")
           });
   }
 

@@ -10,6 +10,7 @@ use Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Laravel\Passport\Client as OAuthClient;
+use DB;
 
 class HomeController extends Controller
 {
@@ -22,7 +23,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')->except(['login']);
-        $this->middleware('check.favorite.drink')->except(['login', 'listDrinks', 'chooseFavoriteDrink']);
+        $this->middleware('check.favorite.drink')->only(['calculateCaffeineIntake']);
     }
 
     public function login(Request $request) {
@@ -110,5 +111,17 @@ class HomeController extends Controller
         }
 
         return $response;
+    }
+
+    public function logout() {
+        $accessToken = Auth::user()->token();
+        DB::table('oauth_refresh_tokens')
+            ->where('access_token_id', $accessToken->id)
+            ->update([
+                'revoked' => true
+            ]);
+
+        $accessToken->revoke();
+        return response()->json(null, 204);
     }
 }

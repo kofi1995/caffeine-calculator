@@ -19,3 +19,5 @@ Route::get('/drinks', 'HomeController@listDrinks');
 Route::put('/favorite-drink', 'HomeController@chooseFavoriteDrink');
 
 Route::post('/calculate-caffeine-intake', 'HomeController@calculateCaffeineIntake');
+
+Route::post('/logout', 'HomeController@logout');

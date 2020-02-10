@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {DataService} from '../../services/data.service'
 import {AuthenticationService} from '../../services/authentication.service'
-import { first } from 'rxjs/operators';
+import { first, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calculate-caffeine',
@@ -38,10 +38,7 @@ export class CalculateCaffeineComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.success = null;;
-    this.error = null;
-    this.warn = null;
-    this.info = null;
+    this.success = this.error = this.warn = this.info = null;
 
     // stop here if form is invalid
     if (this.calculateCaffeineForm.invalid) {
@@ -50,12 +47,13 @@ export class CalculateCaffeineComponent implements OnInit {
 
     this.loading = true;
     this.dataService.calculateCaffeineIntake(this.f.quantity.value, this.f.serving.value)
-      .pipe(first())
+      .pipe(finalize(() => {
+        this.loading = false;
+      }))
       .subscribe(
           data => {
             this.success = data
             this.submitted = false
-            this.loading = false;
           },
           error => {
             if(error.data) {
@@ -66,10 +64,8 @@ export class CalculateCaffeineComponent implements OnInit {
             }
             else {
               this.error = error;
-              this.loading = false;
             }
-            this.loading = false;
           });
-}
+  }
 
 }
